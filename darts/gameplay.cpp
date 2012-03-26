@@ -44,11 +44,9 @@ int play(Player bullSuccessRate)
 	int attempts = 0;	// This variable counts the attempts it took
 	int score = 301;	// This variable holds the score
 
-	bool playing = true;// This variable controls if the game is on or not
-
 	gameState currentState = scoring;	// A game begins with a scoring phase
 
-	while(playing)		// game loop
+	while(currentState!=win)		// game loop
 	{
 		//	states decision
 		if(score<100)
@@ -63,7 +61,6 @@ int play(Player bullSuccessRate)
 				currentState = win;
 		}
 	
-		//	fsm
 		switch(currentState)
 		{
 		case scoring:
@@ -77,35 +74,12 @@ int play(Player bullSuccessRate)
 			score = 50;									// score has been lowered to 50, so the variable score:=50
 			break;
 		case checkout:
-			attempts+=tryToWin(bullSuccessRate);			// try to win
-			playing = false;								// playing:=false
+			attempts+=tryToWin(bullSuccessRate);		// try to win
+			currentState = win;							// won
 			break;
 		}
 	}
-	/*
-	while(playing)		// while the game is on
-	{
-		if(score>100)		// if score is above 100
-			attempts+=tryToLowerToBelow100(score,bullSuccessRate);// try to lower below 100 and record how long it took
-		else if (score<100)	// else if score is below 100
-		{
-			if(score>70)	// if score is above 70
-				attempts+=tryToLowerTo70Below100(score);	// try to lower to 70 and record how long it took
-			else if(score>50)			// else
-			{
-				attempts+=tryToLowerBelow70To50(score);		// try to lower to 50
-				score = 50;									// score has been lowered to 50, so the variable score:=50
-			}
 
-			if(score==50) // else
-			{
-				attempts+=tryToWin(bullSuccessRate);			// try to win
-				playing = false;								// playing:=false
-			}
-
-		}
-	}// loop ends here
-	*/
 	return attempts;
 }
 
@@ -127,7 +101,7 @@ int tryToLowerToBelow100(int& currentScore, Player successPercentage)
 }
 
 // This tries to hit the bull
-int tryToWin(int successPercentage)
+int tryToWin(Player successPercentage)
 {
 	int attemptsCount = 0;
 
@@ -160,28 +134,14 @@ int returnScoreOfNeighbour(int target)
 //	This function attempts to hit a target and returns if it has hit or not
 int hitAttemptScore(int target)
 {
-	/* Try to hit */
-	int successCalculator;
+	int successCalculation = justifiedRandom();		// Get the current success calculation
 
-	do
-	{
-		successCalculator = rand();
-	}
-	while(successCalculator>32700);
+	successCalculation %= 100;
 
-	successCalculator %= 100;
-	/**/
-
-	// If it is under 80% ...
-	if(100-successCalculator<80)
-		// ... return target
-		return target;
-	// Else ...
-	else
-	{
-		// Return one of the target's neighbours
-		return returnScoreOfNeighbour(target);
-	}
+	if(successCalculation<80)						// If it is under 80% ...
+		return target;									// ... return the target
+	else											// Else ...
+		return returnScoreOfNeighbour(target);			// ... return one of the target's neighbours
 
 }
 
@@ -209,42 +169,43 @@ int tryToLowerTo70Below100(int& currentScore)
 {
 	int attemptsCount = 0;													// Counts the attempts it took
 
-	int score = currentScore;												// Store currentScore as score
+	while(currentScore>70)															// While score>70 ...
+		currentScore -= hitAttemptScore(20);											// ... throw at 20
 
-	while(score>70)															// While score>70 ...
-		score -= hitAttemptScore(20);											// ... throw at 20
-
-	currentScore = score;													// Save the reduced score
 	return attemptsCount;													// Return the attempts it took
 }
 
 //	This function tries to throw the bull
 int throwBull(Player successPercentage)
 {
-	// Generate a number from 0-100 to figure out if bull hit was a success
-
-	int successCalculator;
-
-	do
-	{
-		successCalculator = rand();
-	}
-	while(successCalculator>32700);
+	// Get random number
+	int successCalculator = justifiedRandom();
 
 	// Get success percentage
 	successCalculator %= 100;
 
-	// [TODO: Something not right here!!!]
-	if(successCalculator < 70)		// If it is under the success percentage ... // successPercentage is never used!
-		return 50;						// ... bull is hit and we return score of 50
+	if(successCalculator < successPercentage)		// If it is under the success percentage
+		return 50;										// ... bull is hit and we return score of 50
 
-
-	/* TODO: Investigate if variable reuse is bad in here */
 	// Generate a number from 0-21 to pick a random section of the board, *other* than the bull
-	successCalculator = rand() % 21; /* TODO: See if a variant of [1] needs to be done for this too */
+	successCalculator = rand() % 21;
 
 	// ... return the points that this section awards
 	return score[successCalculator];
+}
+
+int justifiedRandom()
+{
+	// Generate a number from 0-100 to figure out if bull hit was a success
+	int randomNumber;
+
+	do
+	{
+		randomNumber = rand();
+	}
+	while(randomNumber>32700);
+
+	return randomNumber;
 }
 
 // This generates a random sign

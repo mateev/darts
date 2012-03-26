@@ -13,11 +13,12 @@ void printCompetitionStatistics(Player*,GameType,int=10000);
 
 int main()
 {
+	srand(time(0));//1000);
+
 	cout << play(JOE);
 
 	return 0;
 
-	srand(time(0));//1000);
 
 	for(int i = 0;i<10;i++)
 	{
