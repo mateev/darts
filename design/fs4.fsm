@@ -1,0 +1,63 @@
+<?xml version='1.0'?>
+<!DOCTYPE qfsmproject SYSTEM 'qfsm.dtd'>
+<qfsmproject version="0.52" author="Qfsm" >
+  <machine nummooreout="0" transfontitalic="0" draw_it="1" statefontsize="8" transfont="Helvetica" statefontitalic="0" author="Ivan Mateev" description="" version="1.0" name="darts" arrowtype="0" numbits="3" statefontweight="50" statefont="Helvetica" numin="0" transfontsize="8" transfontweight="50" type="2" numout="0" initialstate="0" >
+    <outputnames_moore></outputnames_moore>
+    <inputnames></inputnames>
+    <outputnames></outputnames>
+    <itransition ypos="113" endx="146" xpos="94" endy="112" />
+    <state pencolor="0" radius="40" description="Players are trying to bring their total scores down." finalstate="0" moore_outputs="" ypos="112" code="0" xpos="186" linewidth="1" >scoring</state>
+    <state pencolor="0" radius="40" description="Players are trying to focus the score to exactly 50." finalstate="0" moore_outputs="" ypos="198" code="1" xpos="418" linewidth="1" >focus_70</state>
+    <state pencolor="0" radius="40" description="Players are trying to end on a bull." finalstate="0" moore_outputs="" ypos="115" code="3" xpos="935" linewidth="1" >checkout</state>
+    <state pencolor="0" radius="40" description="" finalstate="0" moore_outputs="" ypos="196" code="2" xpos="702" linewidth="1" >focus_50</state>
+    <state pencolor="0" radius="40" description="" finalstate="1" moore_outputs="" ypos="331" code="4" xpos="935" linewidth="1" >endOfGame</state>
+    <transition c1x="246.7640803415529" c2y="204.491167968142" c1y="215.4781452300209" description="" straight="1" type="2" ypos="150.559704728243" endx="169.3628368185705" xpos="196.6371599250325" endy="148.3758821374065" c2x="109.5448899818401" >
+      <from>0</from>
+      <to>0</to>
+      <inputs default="0" any="0" invert="0" >score>=100</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="276.6023020608783" c2y="171.2700632872018" c1y="143.1124653539072" description="" straight="1" type="2" ypos="114.9548674206125" endx="378.025485826098" xpos="225.8907101782684" endy="199.4276612204965" c2x="327.3138939434882" >
+      <from>0</from>
+      <to>1</to>
+      <inputs default="0" any="0" invert="0" >score&lt;100</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="483.705116653451" c2y="294.0859961542833" c1y="298.4133340027927" description="" straight="1" type="2" ypos="235.9991893892385" endx="403.1443729458359" xpos="430.492461957548" endy="235.1390676354104" c2x="346.1148044237267" >
+      <from>1</from>
+      <to>1</to>
+      <inputs default="0" any="0" invert="0" >score>70</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="526.0154273242974" c2y="198.787382435156" c1y="198.9994737503934" description="" straight="1" type="2" ypos="199.2115650656308" endx="662.0829876412616" xpos="457.9816471658153" endy="198.5752911199186" c2x="594.0492074827795" >
+      <from>1</from>
+      <to>2</to>
+      <inputs default="0" any="0" invert="0" >(score&lt;=70)</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="1028.586800652439" c2y="177.253696099427" c1y="39.89000902915321" description="" straight="1" type="2" ypos="98.89045542935932" endx="973.4018954193045" xpos="971.6126012969106" endy="126.1934993726178" c2x="1037.588875234892" >
+      <from>3</from>
+      <to>3</to>
+      <inputs default="0" any="0" invert="0" >score!=0</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="934.5701167636146" c2y="245.6805302842747" c1y="200.3402651421373" description="" straight="1" type="2" ypos="155" endx="933.7103482395617" xpos="935.000001025641" endy="291.020795426412" c2x="934.1402325015881" >
+      <from>3</from>
+      <to>4</to>
+      <inputs default="0" any="0" invert="0" >score==0</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="769.1476023022527" c2y="293.113552057862" c1y="295.4545097271034" description="" straight="1" type="2" ypos="233.8149192650509" endx="687.6819724936593" xpos="715.0396273327762" endy="233.349619654391" c2x="631.5091636685667" >
+      <from>2</from>
+      <to>2</to>
+      <inputs default="0" any="0" invert="0" >score>50</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="792.9604889368388" c2y="141.9500335626137" c1y="170.1494572203363" description="" straight="1" type="2" ypos="198.3488808780588" endx="895.0195169565169" xpos="741.9309749269999" endy="113.7506099048912" c2x="843.9900029466779" >
+      <from>2</from>
+      <to>3</to>
+      <inputs default="0" any="0" invert="0" >score==50</inputs>
+      <outputs></outputs>
+    </transition>
+  </machine>
+</qfsmproject>
