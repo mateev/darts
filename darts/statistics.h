@@ -23,8 +23,8 @@ struct GameStatistics
 };
 
 Player* competitionStatistics(GameType,int=10000);
-GameStatistics* frequenciesOfGameLengths(Player,int&,int=10000);	// Prints out number of throws, games count and percentage in a table; return the table itself
-void addNewStatisticsRecord(GameStatistics* &,int&,int);
+GameStatistics* frequenciesOfGameLengths(Player,int&,int=10000);	//	Generates and returns frequencies of game lengths statistics table
+void addNewStatisticsRecord(GameStatistics* &,int&,int);			//	Adds a new record to the statistics table
 
 
 #endif STATISTICS_H

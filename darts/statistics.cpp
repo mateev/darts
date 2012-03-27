@@ -35,7 +35,7 @@ Player* competitionStatistics(GameType game,int gamesCount)
 	return results;
 }
 
-
+//	Generates and returns frequencies of game lengths statistics table
 GameStatistics* frequenciesOfGameLengths(Player player, int& numberOfRecords,int attempts)
 {
 	if(player!=JOE && player!=SID)	// If the player is invalid ...
@@ -79,6 +79,7 @@ GameStatistics* frequenciesOfGameLengths(Player player, int& numberOfRecords,int
 	return records;				// Return the records
 }
 
+//	Adds a new record to the statistics table
 void addNewStatisticsRecord(GameStatistics* &records,int& numberOfRecords,int newEntry)
 {
 	if(records==NULL)						// If the records are empty

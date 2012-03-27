@@ -1,37 +1,23 @@
 #include <iostream>
 #include <ctime>
+#include <string>
 #include "gameplay.h"
 #include "statistics.h"
 
 using namespace std;
 
 /* The following are related to the coursework specification */
-void printName(Player);
-void printGamesTable(int*,int=10000);
-void printFrequenceiesAndGameLenths(Player, int=10000);
-void printCompetitionStatistics(Player*,GameType,int=10000);
+string name(Player);
+void printGamesTable(int*,long=10000);
+void printFrequenceiesOfGameLengths(Player, long=10000);
+void printCompetitionStatistics(Player*,GameType,long=10000);
 
 int main()
 {
 	srand(time(0));//1000);
+	 
 
-	
-	int statisticsLength = 0;
-
-	GameStatistics* test = frequenciesOfGameLengths(JOE,statisticsLength);
-
-	cout << "Shots:\tCount:" << endl;
-
-	for(int i =0;i<statisticsLength;i++)
-	{
-		cout << test[i].attempts << " \t " << test[i].count << endl;
-	}
-
-
-	for(int i = 0;i<10;i++)
-	{
-		printName(playJoeVsSid());
-	}
+	printFrequenceiesOfGameLengths(JOE,500000);
 
 	return 0;
 
@@ -57,26 +43,20 @@ int main()
 
 
 // Prints the name of the player
-void printName(Player player)
+string name(Player player)
 {
-	cout << '#';
-
 	switch(player)
 	{
 	case SID:
-		cout << "Sid" << endl;
-		return;
+		return "Sid";
 	case JOE:
-		cout << "Joe" << endl;
-		return;
+		return "Joe";
 	default:
-		cout << "Invalid player!" << endl;
+		return "Invalid player!";
 	}
-
-	return;
 }
 
-void printGamesTable(int* gameRatesCounter, int attempts)
+void printGamesTable(int* gameRatesCounter, long attempts)
 {
 	for(int gameRatesCounterIterator = 0; gameRatesCounterIterator<MAX_GAMES_COUNT;gameRatesCounterIterator++)	// Iterate over ammounts of throws required
 	{
@@ -88,8 +68,28 @@ void printGamesTable(int* gameRatesCounter, int attempts)
 	}
 }
 
-void printFrequenceiesAndGameLenths(Player player, int attempts)
+void printFrequenceiesOfGameLengths(Player player, long attempts)
 {
+	int statisticsTableLength = 0;
+
+	GameStatistics* statisticsTable = frequenciesOfGameLengths(JOE,statisticsTableLength,attempts);
+
+	cout << "Statistics for " << name(player) << " playing by himself" << endl;
+
+	cout << "Shots:\tCount:\tPercent:" << endl;
+
+	double allPercent = 0;
+
+
+	for(int i =0;i<statisticsTableLength;i++)
+	{
+		double cv = (((double)statisticsTable[i].count)/attempts)*100;
+		cout << statisticsTable[i].attempts << " \t " << statisticsTable[i].count << " \t " << cv << '%' <<  endl;
+		allPercent += cv;
+	}
+
+	cout << allPercent << endl;
+
 	/*
 	int* gameRatesCounter = frequenciesOfGameLengths(player, attempts);
 
@@ -103,7 +103,7 @@ void printFrequenceiesAndGameLenths(Player player, int attempts)
 	*/
 }
 
-void printCompetitionStatistics(Player* stats, GameType game,int gamesCount)
+void printCompetitionStatistics(Player* stats, GameType game,long gamesCount)
 {
 	int joeWinsCount=0;
 	int sidWinsCount=0;
