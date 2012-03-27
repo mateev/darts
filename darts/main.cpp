@@ -13,14 +13,96 @@ void printFrequenceiesOfGameLengths(Player, long=10000);
 void printCompetitionStatistics(Player*,GameType,long=10000);
 void printCompetitionStatsJoeFirst(long=10000);
 
+void xswap(int* first, int* second)
+{
+	*first ^= *second;
+	*second ^=* first;
+	*first ^=* second;
+}
+
+void game(GameType type = JOE_FIRST,int tries = 10000)
+{
+	srand(time(0));
+
+	Player first;// = (type==JOE_FIRST ? JOE : SID);
+	Player second;// = (first==JOE ? SID :JOE);
+
+	int firstWins = 0;
+	int secondWins = 0;
+
+
+	if(type!=SWITCH)
+		first = (type==JOE_FIRST ? JOE : SID);
+	else
+		first = randomSign() < 0 ? JOE : SID;
+	
+	second = (first==JOE ? SID :JOE);		
+
+	for(int tr = 0;tr<tries;tr++)
+	{
+		int firstPlay  = play(first);
+		int secondPlay = play(second);
+
+		if(firstPlay<=secondPlay)
+		{
+			firstWins++;
+		}
+		else
+		{
+			secondWins++;
+		}
+
+		if(type==SWITCH)
+		{
+			swap(first,second);
+			swap(firstWins,secondWins);
+		}
+
+	}
+
+	if(first==JOE)
+		cout << (double)firstWins*100/(tries) << endl;
+	else
+		cout << (double)secondWins*100/(tries) << endl;
+}
+
+void pl(int tries = 10000)
+{
+	srand(time(0));
+
+	Player first = JOE;
+	Player second = SID;
+
+	int firstWins = 0;
+	int secondWins = 0;
+
+	for(int tr = 0;tr<tries;tr++)
+	{
+		int firstPlay  = play(first);
+		int secondPlay = play(second);
+
+		if(firstPlay<=secondPlay)
+		{
+			firstWins++;
+		}
+		else
+			secondWins++;
+
+	}
+
+	if(first==JOE)
+		cout << (double)firstWins*100/(tries) << endl;
+	else
+		cout << (double)secondWins*100/(tries) << endl;
+}
 
 int main()
 {
-//	srand(time(0));
+//	pl();
 
-//	srand(1000);
+	game(SWITCH);
 
-	srand(1);
+	return 0;
 
 	int joeScore = 301;
 	int sidScore = 301;
@@ -28,14 +110,38 @@ int main()
 	int joe = 0;
 	int sid = 0;
 
-	for(int i = 0;i<1000000;i++)
+	long joeWins = 0;
+	long sidWins = 0;
+
+	int all = 1000;
+
+	for(int i = 0;i<all;i++)
 	{
-		joe+= focus100(joeScore,JOE) + fix50(joeScore) + win(JOE);
-		sid+= focus100(sidScore,SID) + fix50(sidScore) + win(SID);
+		joe = focus100(joeScore,JOE) + fix50(joeScore) + win(JOE);
+		sid = focus100(sidScore,SID) + fix50(sidScore) + win(SID);
+
+
+		if (joe <= sid)
+		{
+			cout << '#';
+			joeWins++; 
+		}
+		else
+			sidWins++;
+
+		cout << joe << ' ' << sid << endl;
+
+		joeScore = sidScore = 301;
 	}
+	
+	cout << (double)joeWins*100/all << endl << joeWins+sidWins;
 
-	cout << (double)(joe*100)/(joe+sid) << endl << (double)(sid*100)/(joe+sid) << endl << (joe+sid) << endl;
+	//cout << joeWins << endl << sidWins << endl;
 
+//	cout << joe << ' ' << sid << endl
+//		<< joe+1<< ' ' << sid << endl;
+
+//	cout << ((joe+1) < sid);
 
 	return 0;
 

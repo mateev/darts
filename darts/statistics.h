@@ -12,10 +12,8 @@ enum GameType
 {
 	JOE_FIRST = 0,
 	SID_FIRST,
-	SWITCH_JOE_FIRST,
-	SWITCH_SID_FIRST
+	SWITCH,
 };
-
 
 Player* competitionStatistics(GameType,int=10000);
 long* frequenciesOfGameLengths(Player,long=10000);	//	Generates and returns frequencies of game lengths statistics table
