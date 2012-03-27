@@ -1,42 +1,47 @@
 #include "statistics.h"
 
-//
-Player* competitionStatistics(GameType game,int gamesCount)
+double joeGames(GameType type = JOE_FIRST,long gamesCount = 10000)
 {
-	/*
-	Player* results = new Player[gamesCount];
+	Player firstPlayer;
+	Player secondPlayer;
 
-	switch(game)
+	int firstWinsCounter = 0;
+	int secondWinsCounter = 0;
+
+	if(type!=SWITCH)									//	If it's not a switch game
+		firstPlayer = (type==JOE_FIRST ? JOE : SID);		//	... first player is chosen, depending on the game type
+	else
+		firstPlayer = randomSign() < 0 ? JOE : SID;		//	Otherwise the first player is chosen via a coin toss
+	
+	secondPlayer = (firstPlayer==JOE ? SID : JOE);		//	Second player is chosen, based on the first player choice
+
+	for(long tr = 0;tr<gamesCount;tr++)						//	Going over the games
 	{
-	case JOE_FIRST:
-		for(int gameCounter = 0; gameCounter<gamesCount; gameCounter++)
-		{
-			results[gameCounter] = playJoeVsSid(JOE);
-		}
-		break;
-	case SID_FIRST:
-		for(int gameCounter = 0; gameCounter<gamesCount; gameCounter++)
-		{
-			results[gameCounter] = playJoeVsSid(SID);
-		}
-		break;
-	case SWITCH_JOE_FIRST:
-		for(int gameCounter = 0; gameCounter<gamesCount; gameCounter++)
-		{
-			results[gameCounter] = (gameCounter==0 ? playJoeVsSid(JOE) : (results[gameCounter-1] == JOE ? playJoeVsSid(SID) : playJoeVsSid(JOE)));
-		}
-		break;
-	case SWITCH_SID_FIRST:
-		for(int gameCounter = 0; gameCounter<gamesCount; gameCounter++)
-		{
-			results[gameCounter] = (gameCounter==0 ? playJoeVsSid(SID) : (results[gameCounter-1] == JOE ? playJoeVsSid(SID) : playJoeVsSid(JOE)));
-		}
-		break;
-	}
-	return results;
-	*/
+		int firstPlay  = play(firstPlayer);						//	First player plays by himself
+		int secondPlay = play(secondPlayer);					//	Second player plays by himself
 
-	return nullptr;
+		if(firstPlay<=secondPlay)								//	If the first player won faster than the second player ...
+		{
+			firstWinsCounter++;											// ... increase wins count
+
+			if(type==SWITCH)									//	If it's a switch game
+			{
+				swap(firstPlayer,secondPlayer);						//	Players swap
+				swap(firstWinsCounter,secondWinsCounter);							//	and keep their wins counts
+			}
+
+		}
+		else
+		{
+			secondWinsCounter++;										//	Otherwise second player wins
+		}
+
+	}
+
+	if(firstPlayer==JOE)										//	Return Joe's statistics
+		return (double)firstWinsCounter*100/(gamesCount);
+	else
+		return (double)secondWinsCounter*100/(gamesCount);
 }
 
 //	Generates and returns frequencies of game lengths statistics table

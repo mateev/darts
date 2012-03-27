@@ -13,156 +13,46 @@ void printFrequenceiesOfGameLengths(Player, long=10000);
 void printCompetitionStatistics(Player*,GameType,long=10000);
 void printCompetitionStatsJoeFirst(long=10000);
 
-void xswap(int* first, int* second)
-{
-	*first ^= *second;
-	*second ^=* first;
-	*first ^=* second;
-}
-
-double joeGames(GameType type = JOE_FIRST,int gamesCount = 10000)
-{
-	srand(time(0));
-
-	Player firstPlayer;
-	Player secondPlayer;
-
-	int firstWins = 0;
-	int secondWins = 0;
-
-
-	if(type!=SWITCH)									//	If it's not a switch game
-		firstPlayer = (type==JOE_FIRST ? JOE : SID);		//	... first player is chosen, depending on the game type
-	else
-		firstPlayer = randomSign() < 0 ? JOE : SID;		//	Otherwise the first player is chosen via a coin toss
-	
-	secondPlayer = (firstPlayer==JOE ? SID : JOE);		//	Second player is chosen, based on the first player choice
-
-	for(int tr = 0;tr<gamesCount;tr++)						//	Going over the games
-	{
-		int firstPlay  = play(firstPlayer);						//	First player plays by himself
-		int secondPlay = play(secondPlayer);					//	Second player plays by himself
-
-		if(firstPlay<=secondPlay)								//	If the first player won faster than the second player ...
-		{
-			firstWins++;											// ... increase wins count
-
-			if(type==SWITCH)									//	If it's a switch game
-			{
-				swap(firstPlayer,secondPlayer);						//	Players swap
-				swap(firstWins,secondWins);							//	and keep their wins counts
-			}
-
-		}
-		else
-		{
-			secondWins++;										//	Otherwise second player wins
-		}
-
-	}
-
-	if(firstPlayer==JOE)
-		return (double)firstWins*100/(gamesCount);
-	else
-		return (double)secondWins*100/(gamesCount);
-}
-
-void pl(int tries = 10000)
-{
-	srand(time(0));
-
-	Player first = JOE;
-	Player second = SID;
-
-	int firstWins = 0;
-	int secondWins = 0;
-
-	for(int tr = 0;tr<tries;tr++)
-	{
-		int firstPlay  = play(first);
-		int secondPlay = play(second);
-
-		if(firstPlay<=secondPlay)
-			firstWins++;
-		else
-			secondWins++;
-
-	}
-
-	if(first==JOE)
-		cout << (double)firstWins*100/(tries) << endl;
-	else
-		cout << (double)secondWins*100/(tries) << endl;
-}
-
 int main()
 {
-//	pl();
+	srand(time(0));
 
-	cout << joeGames(SWITCH);
+	cout << "Joe Vs Sid - estimates of Joe's Percentage Success Rate" << endl;
 
-	return 0;
+	cout << "Rule\t";
 
-	int joeScore = 301;
-	int sidScore = 301;
-
-	int joe = 0;
-	int sid = 0;
-
-	long joeWins = 0;
-	long sidWins = 0;
-
-	int all = 1000;
-
-	for(int i = 0;i<all;i++)
+	for(int runDisplay = 0;runDisplay<5;runDisplay++)
 	{
-		joe = focus100(joeScore,JOE) + fix50(joeScore) + win(JOE);
-		sid = focus100(sidScore,SID) + fix50(sidScore) + win(SID);
+		cout << "Run " << runDisplay << '\t';
+	}
 
+	cout << "Mean" << endl;
 
-		if (joe <= sid)
+	for(int rule = 1;rule <= 3; rule++)
+	{
+		cout << rule << '\t';
+
+		double mean = 0;
+		double currentRun = 0;
+
+		for(int run = 0;run<5;run++)
 		{
-			cout << '#';
-			joeWins++; 
+			currentRun = joeGames((GameType)(rule));
+			mean+=currentRun;
+			cout << currentRun << '\t';
 		}
-		else
-			sidWins++;
 
-		cout << joe << ' ' << sid << endl;
+		cout << mean/5 << endl;
 
-		joeScore = sidScore = 301;
 	}
-	
-	cout << (double)joeWins*100/all << endl << joeWins+sidWins;
 
-	//cout << joeWins << endl << sidWins << endl;
-
-//	cout << joe << ' ' << sid << endl
-//		<< joe+1<< ' ' << sid << endl;
-
-//	cout << ((joe+1) < sid);
+	cout << "Rules:" << endl
+			<< "1. Joe throws first" << endl
+			<< "2. Sid throws first" << endl
+			<< "3. Toss a coin to start, loser starts next" << endl;
 
 	return 0;
 
-	/*
-	for(int i = 0;i<10;i++)
-	{
-
-		int statCount = 500000;
-
-		GameType game = randomSign() < 0 ? SWITCH_JOE_FIRST : SWITCH_SID_FIRST;// ;SID_FIRST; //SWITCH_SID_FIRST;
-
-		Player* st = competitionStatistics(game,statCount);
-
-		printCompetitionStatistics(st,game,statCount);
-
-		delete [] st;
-
-		cout << endl;
-	}
-
-	return 0;
-	*/
 }
 
 
