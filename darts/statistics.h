@@ -16,8 +16,8 @@ enum GameType
 	SWITCH,
 };
 
+/*	This variable holds the maximum throws count that a game can take - 251 ones and one bull	*/
 const unsigned short MAX_GAMES_COUNT = 252;
-const unsigned short MIN_GAMES_COUNT = 7;
 
 /*	Plays a set of games and returns Joe's wins as a percentage	*/
 double joeGames(GameType = JOE_FIRST,long = 10000);

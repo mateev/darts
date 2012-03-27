@@ -74,11 +74,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="dartsCore.cpp" />
     <ClCompile Include="gameplay.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="statistics.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dartsCore.h" />
     <ClInclude Include="gameplay.h" />
     <ClInclude Include="statistics.h" />
   </ItemGroup>

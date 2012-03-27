@@ -1,6 +1,6 @@
 #include "statistics.h"
 
-double joeGames(GameType type = JOE_FIRST,long gamesCount = 10000)
+double joeGames(GameType type,long gamesCount)
 {
 	Player firstPlayer;
 	Player secondPlayer;
