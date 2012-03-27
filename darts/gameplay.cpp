@@ -16,22 +16,19 @@ int play(Player bullSuccessRate)
 
 	GameState currentState = scoring;	// A game begins with a scoring phase
 
-	while(currentState!=win)		// game loop
+	while(currentState!=won)		// game loop
 	{
 		switch(currentState)
 		{
 		case scoring:
-			attempts += tryToLowerToBelow100(score,bullSuccessRate);// try to lower below 100 and record how long it took
+			attempts += focus100(score,bullSuccessRate);// try to lower below 100 and record how long it took
 			break;
-		case focus70:
-			attempts +=	tryToLowerTo70Below100(score);	// try to lower to 70 and record how long it took
-			break;
-		case focus50:
-			attempts += tryToLowerBelow70To50(score);		// try to lower to 50
+		case fixing50:
+			attempts += fix50(score);		// try to lower to 50
 			score = 50;									// score has been lowered to 50, so the variable score:=50
 			break;
 		case checkout:
-			attempts+=tryToWin(bullSuccessRate);		// try to win
+			attempts += win(bullSuccessRate);		// try to win
 			score = 0;
 			break;
 		}
@@ -39,14 +36,12 @@ int play(Player bullSuccessRate)
 		//	states decision
 		if(score<100)
 		{
-			if(score>70)
-				currentState = focus70;
-			else if(score<=70 && score>50)
-				currentState = focus50;
-			else if(score==50)
+			if(score==50)
 				currentState = checkout;
+			else if(score>50)
+				currentState = fixing50;
 			else
-				currentState = win;
+				currentState = won;
 		}
 	}
 
@@ -54,7 +49,7 @@ int play(Player bullSuccessRate)
 }
 
 // This tries to lower the score to under 100; score is passed as parameter
-int tryToLowerToBelow100(int& currentScore, Player successPercentage)
+int focus100(int& currentScore, Player successPercentage)
 {
 	int attemptsCount = 0;
 
@@ -68,7 +63,7 @@ int tryToLowerToBelow100(int& currentScore, Player successPercentage)
 }
 
 // This tries to hit the bull
-int tryToWin(Player successPercentage)
+int win(Player successPercentage)
 {
 	int attemptsCount = 0;
 
@@ -84,6 +79,25 @@ int tryToWin(Player successPercentage)
 //	This returns the points of a neighbour of a target; the paramater is the target
 int returnScoreOfNeighbour(int target)
 {
+	int selectedIndex = -1;
+
+	for(int i =0;i<21;i++)
+	{
+		if(score[i]==target)
+		{
+			selectedIndex = i;
+			break;
+		}
+	}
+
+	if(selectedIndex==0 || selectedIndex==20)
+		return randomSign()<0 ? 1 : 5;
+
+	return score[selectedIndex+randomSign()];
+
+
+
+	/*
 	if(target==20)							// If target is 20 ...
 	{
 		return randomSign()<0 ? 1 : 5;		// ... choose one of the 20s at random
@@ -96,6 +110,7 @@ int returnScoreOfNeighbour(int target)
 	}
 
 	return -1;	// Error somewhere
+	*/
 }
 
 //	This function attempts to hit a target and returns if it has hit or not
@@ -112,52 +127,46 @@ int hitAttemptScore(int target)
 
 }
 
+#include <iostream>
+
 //	This function returns the attempts it took to lower the score to 50
-int tryToLowerBelow70To50(int &currentScore)
+int fix50(int &currentScore)
 {
-	int hitAttemptResult = 0 ;//hitAttemptScore(currentScore-50);
 	int attemptsCount = 0;
+	int attemptedTarget = 0;
+
+	while(currentScore>=70)
+	{
+		currentScore -= hitAttemptScore(20);
+		attemptsCount++;
+	}
 
 	do
 	{
-		hitAttemptResult = hitAttemptScore(currentScore-50);
+		attemptedTarget = currentScore-50;
 		attemptsCount++;
-	}
-	while(hitAttemptResult!=currentScore-50);
 
-	currentScore = 50;
+		if(hitAttemptScore(attemptedTarget)==attemptedTarget)
+		{
+			currentScore -= attemptedTarget;
+		}
+	}
+	while(currentScore!=50);
 
 	return attemptsCount;
-
-
-	/*
-	int attemptsCount = 1;													// This varible counts the attempts it took
-
-	int hitAttemptScoreValue = hitAttemptScore(currentScore-50);			// This variable holds the result of the attempt
-																			//	to hit (currentScore-50)
-
-	if(hitAttemptScoreValue!=currentScore-50)								// If the hit was not successfull...
-	{
-		if(currentScore-hitAttemptScoreValue<50)								// ... and (score-(what we've hit))<50
-			attemptsCount += tryToLowerBelow70To50(currentScore);					// ... try to hit (20-score) again ...
-		else if(currentScore-hitAttemptScoreValue>50)							// ... and (score-(what we've hit))>50 ...
-			attemptsCount += tryToLowerBelow70To50(currentScore-hitAttemptScoreValue);// ... try to hit (score-what we've hit) again ...
-	}
-
-	return attemptsCount;													// Return attempts count :-]
-	*/
 }
 
 //	This function tries to lower the score to less than 70
-int tryToLowerTo70Below100(int& currentScore)
+int focus70(int& currentScore)
 {
 	int attemptsCount = 0;													// Counts the attempts it took
 
-	while(currentScore>=70)															// While score>70 ...
+	do
 	{
 		currentScore -= hitAttemptScore(20);											// ... throw at 20
 		attemptsCount++;																// ... indicate a throw
 	}
+	while(currentScore>=70);															// While score>70 ...
 
 	return attemptsCount;													// Return the attempts it took
 }
@@ -174,7 +183,7 @@ int throwBull(Player successPercentage)
 	if(successCalculator < successPercentage)		// If it is under the success percentage
 		return 50;										// ... bull is hit and we return score of 50
 
-	// Generate a number from 0-21 to pick a random section of the board, *other* than the bull
+	// Generate a number from [0;21) to pick a random section of the board, *other* than the bull
 	successCalculator = rand() % 21;
 
 	// ... return the points that this section awards
@@ -183,7 +192,6 @@ int throwBull(Player successPercentage)
 
 int justifiedRandom()
 {
-	// Generate a number from 0-100 to figure out if bull hit was a success
 	int randomNumber;
 
 	do
@@ -198,5 +206,13 @@ int justifiedRandom()
 // This generates a random sign
 int randomSign()
 {
-	return rand()%2 == 0 ? -1 : 1;
+	int randomNumber = rand();
+	
+	// If RAND_MAX is even, the odd-even ratio is unbalanced, since rand() returns 0 as well;
+	while(!(RAND_MAX & 1) && (randomNumber==RAND_MAX))	 // If RAND_MAX is even and that number is selected
+	{
+		randomNumber = rand();								// ... select another
+	}
+
+	return (randomNumber & 1) ? -1 : 1;
 }

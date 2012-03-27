@@ -7,10 +7,9 @@
 enum GameState
 {
 	scoring = 0,
-	focus70,
-	focus50,
+	fixing50,
 	checkout,
-	win
+	won
 };
 
 /*	The following are used to handle player logic	*/
@@ -28,14 +27,14 @@ Player playTwoPlayers(Player,Player);	// This plays a Joe vs Sid game, asuming J
 //* The Following return the number of attempts *//
 
 /* Scoring phase */
-int tryToLowerToBelow100(int&,Player);		// This tries to lower the score to under 100; score is passed as parameter
+int focus100(int&,Player);		// This tries to lower the score to under 100; score is passed as parameter
 
 /* Focus phase */
-int tryToLowerTo70Below100(int&);			// This tries to lower the score to 50; paramater is current score
-int tryToLowerBelow70To50(int&);				// This tries to lower the score to 50 if it is under 70; paramater is current score
+int focus70(int&);			// This tries to lower the score to 50; paramater is current score
+int fix50(int&);				// This tries to lower the score to 50 if it is under 70; paramater is current score
 
 /* Checkout phase */
-int tryToWin(Player);						// This tries to hit the bull
+int win(Player);						// This tries to hit the bull
 
 //* The following handle score-array traversal *//
 int returnScoreOfNeighbour(int);			// This returns the points of a neighbour of a target; the paramater is the target

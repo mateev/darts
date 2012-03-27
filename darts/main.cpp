@@ -18,14 +18,22 @@ int main()
 {
 //	srand(time(0));
 
+//	srand(time(NULL));
+	
+	int score1 = 301;
+	int score2 = 301;
 	int joe = 0;
 
-	double total = 0;
+	for(int i =0;i<100000;i++)
+	{
+		joe += (focus100(score1,JOE) + fix50(score1) + win(JOE)) <= (focus100(score2,SID) + fix50(score2) + win(SID)) ? 1 : 0;
+	}
+		
+	cout << (double)joe/100000;
 
-	for(int i =0;i<100;i++)
-		joe += play(JOE);
+//	cout << score2 << endl << focus100(score2,JOE) << endl << score2 <<endl;
+//	cout << fix50(score2);
 
-	cout << (double)joe/100 << endl;
 
 	return 0;
 
