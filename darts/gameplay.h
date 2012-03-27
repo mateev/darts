@@ -3,22 +3,13 @@
 
 #include <cstdlib>					// For rand()
 
-/*	The following is used for the game fsm */
-enum GameState
-{
-	scoring = 0,
-	fixing50,
-	checkout,
-	won
-};
-
 /*	The following are used to handle player logic	*/
 typedef int Player;					// Player "entity"
 const Player JOE = 70;				// Joe, defined by his success rate
 const Player SID = 72;				// Sid, defined by his success rate
 
 /* The following play as different players */
-int play(Player);					// Plays as a Player and returns how many shots it took to win
+int play(Player,int=301);					// Plays as a Player and returns how many shots it took to win
 
 //* The Following return the number of attempts *//
 
@@ -41,9 +32,10 @@ int attemptHit(int);					// This tries to hit a number and returns the result
 //* The following are "system functions"*//
 int randomSign();							// This returns -1 or 1 by random
 int randomPercentage();						// This returns a random percentage
-int randomScore();
+int randomScore();							// This returns an int in [1;20]
 
-const short score[2][21] = {{20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20},
-								{0,1,8,10,3,19,5,12,14,17,6,15,18,4,16,7,13,9,2,11,-1}};
+//* The following is scoreboard *//
+const short score[2][21] = {{20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20},	//	This line holds the score at a given section
+								{0,1,8,10,3,19,5,12,14,17,6,15,18,4,16,7,13,9,2,11,-1}};					//	This line hold at which section is the given score
 
 #endif

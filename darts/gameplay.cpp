@@ -1,9 +1,8 @@
 #include "gameplay.h"
 
 // Plays as a Player and returns how many shots it took to win
-int play(Player playerSuccess)
+int play(Player playerSuccess, int playerScore)
 {
-	int playerScore = 301;
 	return focus100(playerScore,playerSuccess) + fix50(playerScore) + win(playerSuccess);
 }
 
