@@ -1,7 +1,19 @@
+/*
+	The following is used to handle the 301 gameplay as specified by the coursework specification
+*/
+
 #ifndef GAME_H
 #define GAME_H
 
 #include "dartsCore.h"
+
+/*	The following is used to handle who goes first	*/
+enum GameType
+{
+	JOE_FIRST = 1,
+	SID_FIRST,
+	SWITCH,
+};
 
 /*	The following are used to handle player logic	*/
 typedef int Player;					// Player "entity"

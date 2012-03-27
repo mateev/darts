@@ -6,7 +6,7 @@
 
 using namespace std;
 
-/* The following are related to the coursework specification */
+/* The following print statistics */
 string name(Player);
 void printFrequenceiesOfGameLengths(Player, long=10000);
 void printJoeVsSid(long = 10000);

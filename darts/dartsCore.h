@@ -1,3 +1,8 @@
+/*
+	The dartsCore module is used for general functions, 
+	which arent related to the game type or game style.
+*/
+
 #ifndef DARTSCORE_H
 #define DARTSCORE_H
 
@@ -8,9 +13,10 @@ int returnScoreOfNeighbour(int);			// This returns the points of a neighbour of 
 
 //* The following handle points awarding when a dart hits a board *//
 int hitBull(int);						// This tries to hit a bull and returns score; paramater is bull hit success percentage
-int attemptHit(int);					// This tries to hit a number and returns the result
+int attemptHitPercentage(int,int);		// This tries to hit a number and returns the result, hit success is dependant on the success percentage
+int attemptHit(int);					// This tries to hit a number and returns the result; hit success is 80%
 
-//* The following are "system functions"*//
+//* The following handle random events*//
 int randomSign();							// This returns -1 or 1 by random
 int randomPercentage();						// This returns a random percentage
 int randomScore();							// This returns an int in [1;20]
