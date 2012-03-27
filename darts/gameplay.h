@@ -30,7 +30,6 @@ Player playTwoPlayers(Player,Player);	// This plays a Joe vs Sid game, asuming J
 int focus100(int&,Player);		// This tries to lower the score to under 100; score is passed as parameter
 
 /* Focus phase */
-int focus70(int&);			// This tries to lower the score to 50; paramater is current score
 int fix50(int&);				// This tries to lower the score to 50 if it is under 70; paramater is current score
 
 /* Checkout phase */
@@ -45,8 +44,10 @@ int hitAttemptScore(int);					// This tries to hit a number and returns the resu
 
 //* The following are "system functions"*//
 int randomSign();							// This returns -1 or 1 by random
-int justifiedRandom();						// Returns a fixed random
+int randomPercentage();						// This returns a random percentage
+int randomScore();
 
-const unsigned score[21] = {20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20};
+const unsigned score[2][21] = {{20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20},
+								{-1,1,8,10,3,19,5,12,14,17,6,15,18,4,16,7,13,9,2,11,-1}};
 
 #endif

@@ -18,22 +18,49 @@ int main()
 {
 //	srand(time(0));
 
-//	srand(time(NULL));
-	
+	int j = 0;
+	int j2= 0;
+	int j3= 0;
+
+	for(int i = 0;i<1000;i++)
+	{
+		int joeScore = 301;
+		int sidScore = 301;
+		j += ((focus100(joeScore,JOE) >= focus100(sidScore,SID)) ? 1 : 0);
+		j2+= ((win(JOE)>=(win(SID))) ? 1 : 0);
+		j3+= ((fix50(joeScore))>=(fix50(sidScore)) ? 1 :0);
+	}
+
+	cout << (double)j/1000 << endl;
+	cout << (double)j2/1000<< endl;
+	cout << (double)j3/1000<< endl;
+	cout << (double)(j+j2+j3)/3 << endl;
+
+	j = 0;
+
+
+
+	return 0;
+
+
 	int score1 = 301;
 	int score2 = 301;
 	int joe = 0;
 
 	for(int i =0;i<100000;i++)
 	{
-		joe += (focus100(score1,JOE) + fix50(score1) + win(JOE)) <= (focus100(score2,SID) + fix50(score2) + win(SID)) ? 1 : 0;
+		int f1 = focus100(score1,JOE);
+		int f5 = fix50(score1);
+		int w = win(JOE);
+
+		int sum = f1+f5+w;
+
+		joe += sum;
+
+		score1= 301;
 	}
-		
-	cout << (double)joe/100000;
 
-//	cout << score2 << endl << focus100(score2,JOE) << endl << score2 <<endl;
-//	cout << fix50(score2);
-
+	cout << joe;
 
 	return 0;
 
