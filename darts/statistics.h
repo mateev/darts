@@ -16,7 +16,15 @@ enum GameType
 	SWITCH_SID_FIRST
 };
 
+struct GameStatistics
+{
+	unsigned short attempts;
+	unsigned short count;
+};
+
 Player* competitionStatistics(GameType,int=10000);
-int* frequenciesAndGameLengths(Player,int=10000);	// Prints out number of throws, games count and percentage in a table; return the table itself
+GameStatistics* frequenciesOfGameLengths(Player,int&,int=10000);	// Prints out number of throws, games count and percentage in a table; return the table itself
+void addNewStatisticsRecord(GameStatistics* &,int&,int);
+
 
 #endif STATISTICS_H

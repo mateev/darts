@@ -36,24 +36,82 @@ Player* competitionStatistics(GameType game,int gamesCount)
 }
 
 
-int* frequenciesAndGameLengths(Player player,int attempts)
+GameStatistics* frequenciesOfGameLengths(Player player, int& numberOfRecords,int attempts)
 {
 	// If the player is invalid:
 	if(player!=JOE && player!=SID)
 		return NULL;					// Return null pointer
 
-	int* gameRatesCounter = new int[MAX_GAMES_COUNT];							// Allocate memory for the table
+	bool isNewRecord;
+	GameStatistics* records = NULL;
 
-	for(int gamesCounter = 0; gamesCounter<MAX_GAMES_COUNT; gamesCounter++)		// Fill all members with 0
-		gameRatesCounter[gamesCounter]=0;
-
-	for(int gamesCounter = 0; gamesCounter<attempts;gamesCounter++)				// Play the game attempts-times
+	for(int currentAttempt = 0;currentAttempt<attempts;++currentAttempt)
 	{
+		int intermediateValue = play(player);
 
-		int currentGames = play(player);											// ... record how many throws did the current game take
-		gameRatesCounter[currentGames]++;											// ... increase the counter for that ammount of throws
+		if(records==NULL)
+		{
+			addNewStatisticsRecord(records,numberOfRecords,intermediateValue);
+		}
+		else
+		{
+			isNewRecord = true;
+
+			for(int i = 0;i<numberOfRecords;i++)
+			{
+				if(records[i].attempts==intermediateValue)
+				{
+					records[i].count++;
+					isNewRecord = false;
+					break;
+				}
+			}
+
+			if(isNewRecord)
+			{
+				addNewStatisticsRecord(records,numberOfRecords,intermediateValue);
+			}
+
+		}
+
+
 	}
 
-	return gameRatesCounter;							// All went good
+	return records;
 }
 
+void addNewStatisticsRecord(GameStatistics* &records,int& numberOfRecords,int newEntry)
+{
+	if(records==NULL)
+	{
+		records = new GameStatistics[1];
+		records[0].attempts = newEntry;
+		records[0].count = 1;
+		numberOfRecords++;
+
+		return;
+	}
+
+	GameStatistics* temporaryValues = new GameStatistics[numberOfRecords];
+
+	for(int indexer = 0;indexer<numberOfRecords;indexer++)
+	{
+		temporaryValues[indexer] = records[indexer];
+	}
+
+	delete [] records;
+
+	++numberOfRecords;
+
+	records = new GameStatistics[numberOfRecords];
+
+	for(int indexer = 0;indexer<numberOfRecords-1;indexer++)
+	{
+		records[indexer] = temporaryValues[indexer];
+	}
+
+	records[numberOfRecords-1].attempts = newEntry;
+	records[numberOfRecords-1].count = 1;
+
+	delete [] temporaryValues;
+}

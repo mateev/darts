@@ -30,13 +30,7 @@ int playSid()
 	return play(SID);
 }
 
-enum gameState{
-	scoring = 0,
-	focus70,
-	focus50,
-	checkout,
-	win
-};
+
 
 // Returns attempts until win
 int play(Player bullSuccessRate)
@@ -44,7 +38,7 @@ int play(Player bullSuccessRate)
 	int attempts = 0;	// This variable counts the attempts it took
 	int score = 301;	// This variable holds the score
 
-	gameState currentState = scoring;	// A game begins with a scoring phase
+	GameState currentState = scoring;	// A game begins with a scoring phase
 
 	while(currentState!=win)		// game loop
 	{

@@ -6,7 +6,7 @@
 using namespace std;
 
 /* The following are related to the coursework specification */
-void printName(int);
+void printName(Player);
 void printGamesTable(int*,int=10000);
 void printFrequenceiesAndGameLenths(Player, int=10000);
 void printCompetitionStatistics(Player*,GameType,int=10000);
@@ -15,7 +15,23 @@ int main()
 {
 	srand(time(0));//1000);
 
-	cout << play(JOE);
+	
+	int statisticsLength = 0;
+
+	GameStatistics* test = frequenciesOfGameLengths(JOE,statisticsLength);
+
+	cout << "Shots:\tCount:" << endl;
+
+	for(int i =0;i<statisticsLength;i++)
+	{
+		cout << test[i].attempts << " \t " << test[i].count << endl;
+	}
+
+
+	for(int i = 0;i<10;i++)
+	{
+		printName(playJoeVsSid());
+	}
 
 	return 0;
 
@@ -48,10 +64,10 @@ void printName(Player player)
 	switch(player)
 	{
 	case SID:
-		cout << "Sid playing:" << endl;
+		cout << "Sid" << endl;
 		return;
 	case JOE:
-		cout << "Joe playing:" << endl;
+		cout << "Joe" << endl;
 		return;
 	default:
 		cout << "Invalid player!" << endl;
@@ -74,7 +90,8 @@ void printGamesTable(int* gameRatesCounter, int attempts)
 
 void printFrequenceiesAndGameLenths(Player player, int attempts)
 {
-	int* gameRatesCounter = frequenciesAndGameLengths(player, attempts);
+	/*
+	int* gameRatesCounter = frequenciesOfGameLengths(player, attempts);
 
 	if(gameRatesCounter!=NULL)
 	{
@@ -83,6 +100,7 @@ void printFrequenceiesAndGameLenths(Player player, int attempts)
 	}
 
 	delete [] gameRatesCounter;
+	*/
 }
 
 void printCompetitionStatistics(Player* stats, GameType game,int gamesCount)

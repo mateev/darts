@@ -3,13 +3,23 @@
 
 #include <cstdlib>					// For rand()
 
+/*	The following is used for the game fsm */
+enum GameState
+{
+	scoring = 0,
+	focus70,
+	focus50,
+	checkout,
+	win
+};
+
 /*	The following are used to handle player logic	*/
 typedef unsigned short Player;		// Player "entity"
 const Player JOE = 70;				// Joe, defined by his success rate
 const Player SID = 72;				// Sid, defined by his success rate
 
 /* The following play as different players */
-int play(Player);					//returns attempts until win
+int play(Player);					// returns attempts until win
 int playJoe();						// plays as joe
 int playSid();						// plays as sid
 Player playJoeVsSid(Player=JOE);	// This plays a Joe vs Sid game, asuming Joe plays first
