@@ -38,80 +38,79 @@ Player* competitionStatistics(GameType game,int gamesCount)
 
 GameStatistics* frequenciesOfGameLengths(Player player, int& numberOfRecords,int attempts)
 {
-	// If the player is invalid:
-	if(player!=JOE && player!=SID)
-		return NULL;					// Return null pointer
+	if(player!=JOE && player!=SID)	// If the player is invalid ...
+		return NULL;					// ... return null pointer
 
-	bool isNewRecord;
-	GameStatistics* records = NULL;
+	int aGameAttempts;				// This variable will hold the result of each game played
+	bool isNewRecord;				// This variable is behind the logic if we are adding a new record
+	GameStatistics* records = NULL; // This variable will hold our statistics records
 
-	for(int currentAttempt = 0;currentAttempt<attempts;++currentAttempt)
+	for(int currentAttempt = 0;currentAttempt<attempts;++currentAttempt)			// Start counting the attempts
 	{
-		int intermediateValue = play(player);
+		aGameAttempts = play(player);													// Play a game
 
-		if(records==NULL)
+		if(records==NULL)																// If the records are empty...
 		{
-			addNewStatisticsRecord(records,numberOfRecords,intermediateValue);
+			addNewStatisticsRecord(records,numberOfRecords,aGameAttempts);					// ... add the result of the game played
 		}
-		else
+		else																			// Or else
 		{
-			isNewRecord = true;
+			isNewRecord = true;																// ... assume it's a new record ...
 
-			for(int i = 0;i<numberOfRecords;i++)
+			for(int i = 0;i<numberOfRecords;i++)											// ... go over the existing records ...
 			{
-				if(records[i].attempts==intermediateValue)
+				if(records[i].attempts==aGameAttempts)											// ... if that ammount of attempts exists in the records ...								
 				{
-					records[i].count++;
-					isNewRecord = false;
+					records[i].count++;																// ... increase the count by one
+					isNewRecord = false;															// ... it's not a new record
 					break;
 				}
 			}
 
-			if(isNewRecord)
+			if(isNewRecord)																// If it's a new record ...
 			{
-				addNewStatisticsRecord(records,numberOfRecords,intermediateValue);
+				addNewStatisticsRecord(records,numberOfRecords,aGameAttempts);				// ... add it to the records
 			}
 
 		}
 
-
 	}
 
-	return records;
+	return records;				// Return the records
 }
 
 void addNewStatisticsRecord(GameStatistics* &records,int& numberOfRecords,int newEntry)
 {
-	if(records==NULL)
+	if(records==NULL)						// If the records are empty
 	{
-		records = new GameStatistics[1];
-		records[0].attempts = newEntry;
+		records = new GameStatistics[1];		// ... create them ...
+		records[0].attempts = newEntry;			// ... add the new entry ...
 		records[0].count = 1;
-		numberOfRecords++;
+		numberOfRecords++;						// ... increase the count
 
 		return;
 	}
 
-	GameStatistics* temporaryValues = new GameStatistics[numberOfRecords];
+	GameStatistics* temporaryValues = new GameStatistics[numberOfRecords];		// This will hold the records when copying
 
-	for(int indexer = 0;indexer<numberOfRecords;indexer++)
+	for(int indexer = 0;indexer<numberOfRecords;indexer++)						//	This loop copies the records to the temporary holder
 	{
 		temporaryValues[indexer] = records[indexer];
 	}
 
-	delete [] records;
+	delete [] records;															// Delete the original records
 
-	++numberOfRecords;
+	++numberOfRecords;															// Increase the count
 
-	records = new GameStatistics[numberOfRecords];
+	records = new GameStatistics[numberOfRecords];								// Re-initialize records with the new counter
 
-	for(int indexer = 0;indexer<numberOfRecords-1;indexer++)
+	for(int indexer = 0;indexer<numberOfRecords-1;indexer++)					// Restore the records from the temporary holder
 	{
 		records[indexer] = temporaryValues[indexer];
 	}
 
-	records[numberOfRecords-1].attempts = newEntry;
+	records[numberOfRecords-1].attempts = newEntry;								// Add the new entry
 	records[numberOfRecords-1].count = 1;
 
-	delete [] temporaryValues;
+	delete [] temporaryValues;													// Clean up
 }
