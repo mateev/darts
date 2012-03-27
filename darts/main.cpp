@@ -14,14 +14,28 @@ void printCompetitionStatistics(Player*,GameType,long=10000);
 
 int main()
 {
-	srand(time(0));//1000);
-	 
+	srand(1000);
+
+	int test[252];
+
+	for(int i =0;i<252;i++)
+		test[i]=0;
+
+	for(int i =0;i<500000;i++)
+		test[play(JOE)-1]++;
+
+	for(int i =0;i<252;i++)
+		if(test[i]!=0)
+		{
+			cout << i << ' ' << test[i] << endl;
+		}
 
 	printFrequenceiesOfGameLengths(JOE,500000);
 
+
 	return 0;
 
-
+	/*
 	for(int i = 0;i<10;i++)
 	{
 
@@ -39,6 +53,7 @@ int main()
 	}
 
 	return 0;
+	*/
 }
 
 
@@ -72,35 +87,19 @@ void printFrequenceiesOfGameLengths(Player player, long attempts)
 {
 	int statisticsTableLength = 0;
 
-	GameStatistics* statisticsTable = frequenciesOfGameLengths(JOE,statisticsTableLength,attempts);
+	long* statisticsTable = frequenciesOfGameLengths(JOE,attempts);
 
 	cout << "Statistics for " << name(player) << " playing by himself" << endl;
 
 	cout << "Shots:\tCount:\tPercent:" << endl;
 
-	double allPercent = 0;
-
-
-	for(int i =0;i<statisticsTableLength;i++)
+	for(int i = 0; i < MAX_GAMES_COUNT; i++)
 	{
-		double cv = (((double)statisticsTable[i].count)/attempts)*100;
-		cout << statisticsTable[i].attempts << " \t " << statisticsTable[i].count << " \t " << cv << '%' <<  endl;
-		allPercent += cv;
+		if(statisticsTable[i]!=0)
+		{
+			cout << i << ' ' << statisticsTable[i] << endl;
+		}
 	}
-
-	cout << allPercent << endl;
-
-	/*
-	int* gameRatesCounter = frequenciesOfGameLengths(player, attempts);
-
-	if(gameRatesCounter!=NULL)
-	{
-		printName(player);															// Print out the player's name
-		printGamesTable(gameRatesCounter);
-	}
-
-	delete [] gameRatesCounter;
-	*/
 }
 
 void printCompetitionStatistics(Player* stats, GameType game,long gamesCount)
