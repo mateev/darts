@@ -9,9 +9,9 @@ const Player JOE = 70;				// Joe, defined by his success rate
 const Player SID = 72;				// Sid, defined by his success rate
 
 /* The following play as different players */
-int play(Player,int=301);					// Plays as a Player and returns how many shots it took to win
+int play(Player,int=301);					// Plays as a Player and returns how many shots it took to win; game can be other than 301
 
-//*		The Following return the number of attempts		*//
+//*		The Following return number of shots		*//
 
 /* Scoring phase */
 int focus100(int&,Player);		// This tries to lower the score to under 100; score is passed as parameter
