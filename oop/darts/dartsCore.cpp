@@ -1,7 +1,7 @@
 #include "dartsCore.h"
 
 //	This returns the points in a neighbour of a target; the paramater is the target
-int returnScoreOfNeighbour(int target)
+int DartsCore::returnScoreOfNeighbour(int target)
 {
 	if(score[1][target]==-1)						//	If player was aiming for a 20, but missed...
 		return randomSign()<0 ? 1 : 5;					//	... he will get one of 1 or 5 by random
@@ -10,7 +10,7 @@ int returnScoreOfNeighbour(int target)
 }
 
 // This tries to hit a number and returns the result, hit success is dependant on the success percentage
-int attemptHitPercentage(int target,int successPercentage)
+int DartsCore::attemptHitPercentage(int target,int successPercentage)
 {
 	int succeededPercentage = randomPercentage();	// Get the current success calculation
 
@@ -21,13 +21,13 @@ int attemptHitPercentage(int target,int successPercentage)
 }
 
 //	This function attempts to hit a target and returns the result of that attempt
-int attemptHit(int target)
+int DartsCore::attemptHit(int target)
 {
-	attemptHitPercentage(target,80);
+	return attemptHitPercentage(target,80);
 }
 
 //	Player tries to hit the bull
-int hitBull(int successPercentage)
+int DartsCore::hitBull(int successPercentage)
 {
 	int succeededPercentage = randomPercentage();	// Get random number
 
@@ -38,7 +38,7 @@ int hitBull(int successPercentage)
 }
 
 // This creates a random percentage;
-int randomPercentage()
+int DartsCore::randomPercentage()
 {
 	int randomNumber;
 
@@ -52,7 +52,7 @@ int randomPercentage()
 }
 
 // Return a score between 1 and 20
-int randomScore()
+int DartsCore::randomScore()
 {
 	int randomNumber;
 	
@@ -66,7 +66,7 @@ int randomScore()
 }
 
 // This generates a random sign
-int randomSign()
+int DartsCore::randomSign()
 {
 	int randomNumber;
 
