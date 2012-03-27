@@ -1,36 +1,12 @@
 #include "gameplay.h"
 
-// This plays a Joe vs Sid game
-Player playJoeVsSid(Player firstPlayer)
+Player playTwoPlayers(Player firstPlayer,Player secondPlayer)
 {
-	Player secondPlayer = firstPlayer == JOE ? SID : JOE;			// If the first player is Joe, the second will be Sid and vice versa
+	int firstPlayerResult = play(firstPlayer);
+	int secondPlayerResult = play(secondPlayer);
 
-	int firstPlayerGame = play(firstPlayer);						// First player plays by himself
-	int secondPlayerGame = play(secondPlayer);						// Second player plays by himself
-
-	if(firstPlayerGame > secondPlayerGame)						// If first player's attempts count is bigger than the second player's
-	{
-		return secondPlayer;										// ... first player looses
-	}
-	else 
-	{
-		return firstPlayer;											// ... second player looses
-	}
+	return (firstPlayerResult>=secondPlayerResult) ? firstPlayer : secondPlayer;
 }
-
-// plays as joe
-int playJoe()
-{
-	return play(JOE);
-}
-
-// plays as sid
-int playSid()
-{
-	return play(SID);
-}
-
-
 
 // Returns attempts until win
 int play(Player bullSuccessRate)
@@ -42,6 +18,24 @@ int play(Player bullSuccessRate)
 
 	while(currentState!=win)		// game loop
 	{
+		switch(currentState)
+		{
+		case scoring:
+			attempts += tryToLowerToBelow100(score,bullSuccessRate);// try to lower below 100 and record how long it took
+			break;
+		case focus70:
+			attempts +=	tryToLowerTo70Below100(score);	// try to lower to 70 and record how long it took
+			break;
+		case focus50:
+			attempts += tryToLowerBelow70To50(score);		// try to lower to 50
+			score = 50;									// score has been lowered to 50, so the variable score:=50
+			break;
+		case checkout:
+			attempts+=tryToWin(bullSuccessRate);		// try to win
+			score = 0;
+			break;
+		}
+
 		//	states decision
 		if(score<100)
 		{
@@ -54,24 +48,6 @@ int play(Player bullSuccessRate)
 			else
 				currentState = win;
 		}
-	
-		switch(currentState)
-		{
-		case scoring:
-			attempts += tryToLowerToBelow100(score,bullSuccessRate);// try to lower below 100 and record how long it took
-			break;
-		case focus70:
-			attempts +=	tryToLowerTo70Below100(score);	// try to lower to 70 and record how long it took
-			break;
-		case focus50:
-			attempts+=tryToLowerBelow70To50(score);		// try to lower to 50
-			score = 50;									// score has been lowered to 50, so the variable score:=50
-			break;
-		case checkout:
-			attempts+=tryToWin(bullSuccessRate);		// try to win
-			currentState = win;							// won
-			break;
-		}
 	}
 
 	return attempts;
@@ -82,15 +58,12 @@ int tryToLowerToBelow100(int& currentScore, Player successPercentage)
 {
 	int attemptsCount = 0;
 
-	int score = currentScore;
-
-	while(score>=100)
+	while(currentScore>=100)
 	{
-		score -= throwBull(successPercentage);
+		currentScore -= throwBull(successPercentage);
 		attemptsCount++;
 	}
 
-	currentScore = score;
 	return attemptsCount;
 }
 
@@ -140,8 +113,24 @@ int hitAttemptScore(int target)
 }
 
 //	This function returns the attempts it took to lower the score to 50
-int tryToLowerBelow70To50(int currentScore)
+int tryToLowerBelow70To50(int &currentScore)
 {
+	int hitAttemptResult = 0 ;//hitAttemptScore(currentScore-50);
+	int attemptsCount = 0;
+
+	do
+	{
+		hitAttemptResult = hitAttemptScore(currentScore-50);
+		attemptsCount++;
+	}
+	while(hitAttemptResult!=currentScore-50);
+
+	currentScore = 50;
+
+	return attemptsCount;
+
+
+	/*
 	int attemptsCount = 1;													// This varible counts the attempts it took
 
 	int hitAttemptScoreValue = hitAttemptScore(currentScore-50);			// This variable holds the result of the attempt
@@ -156,6 +145,7 @@ int tryToLowerBelow70To50(int currentScore)
 	}
 
 	return attemptsCount;													// Return attempts count :-]
+	*/
 }
 
 //	This function tries to lower the score to less than 70
@@ -163,8 +153,11 @@ int tryToLowerTo70Below100(int& currentScore)
 {
 	int attemptsCount = 0;													// Counts the attempts it took
 
-	while(currentScore>70)															// While score>70 ...
+	while(currentScore>=70)															// While score>70 ...
+	{
 		currentScore -= hitAttemptScore(20);											// ... throw at 20
+		attemptsCount++;																// ... indicate a throw
+	}
 
 	return attemptsCount;													// Return the attempts it took
 }

@@ -8,30 +8,24 @@ using namespace std;
 
 /* The following are related to the coursework specification */
 string name(Player);
-void printGamesTable(int*,long=10000);
 void printFrequenceiesOfGameLengths(Player, long=10000);
+
 void printCompetitionStatistics(Player*,GameType,long=10000);
+void printCompetitionStatsJoeFirst(long=10000);
+
 
 int main()
 {
-	srand(1000);
+//	srand(time(0));
 
-	int test[252];
+	int joe = 0;
 
-	for(int i =0;i<252;i++)
-		test[i]=0;
+	double total = 0;
 
-	for(int i =0;i<500000;i++)
-		test[play(JOE)-1]++;
+	for(int i =0;i<100;i++)
+		joe += play(JOE);
 
-	for(int i =0;i<252;i++)
-		if(test[i]!=0)
-		{
-			cout << i << ' ' << test[i] << endl;
-		}
-
-	printFrequenceiesOfGameLengths(JOE,500000);
-
+	cout << (double)joe/100 << endl;
 
 	return 0;
 
@@ -71,17 +65,6 @@ string name(Player player)
 	}
 }
 
-void printGamesTable(int* gameRatesCounter, long attempts)
-{
-	for(int gameRatesCounterIterator = 0; gameRatesCounterIterator<MAX_GAMES_COUNT;gameRatesCounterIterator++)	// Iterate over ammounts of throws required
-	{
-		if(gameRatesCounter[gameRatesCounterIterator]!=0)														// If there were more than 0 games with a specified throw count
-		{
-			// Print out number of throws, games count and percentage of all:
-			cout << "Number of throws: " << gameRatesCounterIterator << ";\tCount: " << gameRatesCounter[gameRatesCounterIterator] << ";\tPercentage: " << 100*(double)gameRatesCounter[gameRatesCounterIterator]/attempts << '%' << endl; 
-		}
-	}
-}
 
 void printFrequenceiesOfGameLengths(Player player, long attempts)
 {
@@ -89,7 +72,7 @@ void printFrequenceiesOfGameLengths(Player player, long attempts)
 
 	long* statisticsTable = frequenciesOfGameLengths(JOE,attempts);
 
-	cout << "Statistics for " << name(player) << " playing by himself" << endl;
+	cout << "#Statistics for " << name(player) << " playing by himself" << endl;
 
 	cout << "Shots:\tCount:\tPercent:" << endl;
 
@@ -97,9 +80,18 @@ void printFrequenceiesOfGameLengths(Player player, long attempts)
 	{
 		if(statisticsTable[i]!=0)
 		{
-			cout << i << ' ' << statisticsTable[i] << endl;
+			cout << i+1 << '\t' << statisticsTable[i] << '\t' << ((double)statisticsTable[i]/attempts)*100 << '%' << endl;
 		}
 	}
+}
+
+void printCompetitionStatsJoeFirst(long attempts)
+{
+	Player* stats = competitionStatistics(SID_FIRST,attempts);
+
+	printCompetitionStatistics(stats,SID_FIRST,attempts);
+
+	delete [] stats;
 }
 
 void printCompetitionStatistics(Player* stats, GameType game,long gamesCount)
@@ -137,6 +129,6 @@ void printCompetitionStatistics(Player* stats, GameType game,long gamesCount)
 
 	cout << endl;
 
-	cout << "->Joe wins " << 100*(double)joeWinsCount/gamesCount << "% of the games" << endl
-		 << "->Sid wins " << 100*(double)sidWinsCount/gamesCount << "% of the games" << endl;
+	cout << "->Joe wins " << 100*(double)joeWinsCount/gamesCount << "% of the games" << endl;
+//		 << "->Sid wins " << 100*(double)sidWinsCount/gamesCount << "% of the games" << endl;
 }

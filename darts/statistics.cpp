@@ -3,6 +3,7 @@
 //
 Player* competitionStatistics(GameType game,int gamesCount)
 {
+	/*
 	Player* results = new Player[gamesCount];
 
 	switch(game)
@@ -33,6 +34,9 @@ Player* competitionStatistics(GameType game,int gamesCount)
 		break;
 	}
 	return results;
+	*/
+
+	return nullptr;
 }
 
 //	Generates and returns frequencies of game lengths statistics table
