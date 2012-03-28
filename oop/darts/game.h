@@ -4,30 +4,31 @@
 #include "dartboard.h"
 #include "player.h"
 
-enum GameType	{ JOE_PRACTICE, JOE_FIRST, SID_FIRST, SWITCH };
+enum GameType	{ JOE_FIRST, SID_FIRST, SWITCH };
 
 class Game
 {
 private:
-	bool isOver;
+	bool isOver;						//	Decides if game is over
 
-	Dartboard board;
+	Dartboard board;					//	The board object for the game
 
-	Player playerOne;
+	Player playerOne;					
 	Player playerTwo;
 
-	void resetPlayers();
+	void resetPlayers();				//	Reset functionality for the players
 public:
-	Game();
+	Game();								//	Default constructor
+	Game(const Game&);					//	Copy constructor
 
-	static const int MAX_GAMES_COUNT;
+	const bool IsGameOver() const;		//	Tells if game is over
 
-	const bool IsGameOver() const;
+	void ResetGame();					//	Resets the game
 
-	void ResetGame();
+	int Practice(PlayerID=JOE);			//	Provides functionality for a player to practice
+	PlayerID OneVsOne(PlayerID=JOE);	//	Provides functionality for a two-player game
 
-	int Practice(PlayerID=JOE);
-	PlayerID OneVsOne(PlayerID=JOE);
+	static const int MAX_GAMES_COUNT;	//	The maximum possible length of a game
 };
 
 
