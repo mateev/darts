@@ -53,6 +53,10 @@ void Player::ScorePoints(int points)
 	case GameStage::WIN:													// If the player is aiming to win ...
 		score -= (points==DartsCore::BULLVALUE) ? DartsCore::BULLVALUE : 0;		//	... award points only if he has hit a bull
 		break;
+	case GameStage::FIX:
+		if(score-points>=50)
+			score -= points;
+		break;
 	default:
 		score -= points;														// Award points as usual
 	}

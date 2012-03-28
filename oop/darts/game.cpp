@@ -1,5 +1,7 @@
 #include "game.h"
 
+const int Game::MAX_GAMES_COUNT = 252;
+
 const bool Game::IsGameOver() const
 {
 	return isOver;

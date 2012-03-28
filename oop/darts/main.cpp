@@ -4,34 +4,26 @@
 
 using namespace std;
 
+void printPracticeStatistics(long=10000);
 
 int main()
 {
-	Game activeGame = Game();
-
-	int joeC=0;
-	for(int i =0;i<1000;i++)
-		joeC += (activeGame.OneVsOne(SID) == JOE) ? 1 : 0;
-
-	cout << joeC;
-
-
-	return 0;
-
-
-	srand(time(0));
-	Dartboard board;
-
-	Player first(PlayerID::JOE);
-	Player second(PlayerID::SID);
-
-	cout << first.GetName() << endl << second.GetName() << endl;
-
-	swap(first,second);
-
-	cout << first.GetName() << endl << second.GetName() << endl;
-
+	printPracticeStatistics(100);
 
 	return 0;
 }
 
+void printPracticeStatistics(long gamesCount)
+{
+	Game practiceSession = Game();
+
+	for(int i =0;i<gamesCount;i++)
+	{
+		if(practiceSession.Practice()<=6)
+			cout << "J" << i;
+		cout << i;
+	}
+
+	cin.get();
+
+}

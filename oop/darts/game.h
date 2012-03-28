@@ -20,6 +20,8 @@ private:
 public:
 	Game();
 
+	static const int MAX_GAMES_COUNT;
+
 	const bool IsGameOver() const;
 
 	void ResetGame();
