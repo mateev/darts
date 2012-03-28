@@ -97,11 +97,11 @@ void printFrequenceiesOfGameLengths(Player player, long attempts)
 
 	cout << "Shots:\tGames:\tPercent:" << endl;
 
-	for(int i = 0; i < MAX_GAMES_COUNT; i++)
+	for(int i = 0; i <= MAX_GAMES_COUNT; i++)
 	{
 		if(statisticsTable[i]!=0)
 		{
-			allShotsCount += i+1;
+			allShotsCount += i;
 			allAttemptsCount += statisticsTable[i];
 			allPercentCount += ((double)statisticsTable[i]/attempts)*100;
 			cout << i+1 << '\t' << statisticsTable[i] << '\t' << ((double)statisticsTable[i]/attempts)*100 << '%' << endl;

@@ -50,16 +50,16 @@ long* frequenciesOfGameLengths(Player player,long attempts)
 	if(player!=JOE && player!=SID)	// If the player is invalid ...
 		return NULL;					// ... return null pointer
 
-	long* records = new long[MAX_GAMES_COUNT];	// This array will hold the statistic records
+	long* records = new long[MAX_GAMES_COUNT+1];	// This array will hold the statistic records
 
-	for(int i = 0;i<MAX_GAMES_COUNT;i++)		// Initialize each element
+	for(int i = 0;i<=MAX_GAMES_COUNT;i++)		// Initialize each element
 	{
 		records[i] = 0;
 	}
 
 	for(long attempt = 0; attempt<attempts; attempt++)	//	Attempt to win, until desired count is reached
 	{
-		records[play(player)-1]++;							// Record how long it took to play a game
+		records[play(player)]++;							// Record how long it took to play a game
 	}
 
 	return records;				// Return the records

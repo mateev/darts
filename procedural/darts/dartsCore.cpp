@@ -10,7 +10,7 @@ int returnScoreOfNeighbour(int target)
 }
 
 // This tries to hit a number and returns the result, hit success is dependant on the success percentage
-int attemptHitPercentage(int target,int successPercentage)
+int attemptHit(int target,int successPercentage)
 {
 	int succeededPercentage = randomPercentage();	// Get the current success calculation
 
@@ -20,11 +20,6 @@ int attemptHitPercentage(int target,int successPercentage)
 		return returnScoreOfNeighbour(target);			// ... return one of the target's neighbours
 }
 
-//	This function attempts to hit a target and returns the result of that attempt
-int attemptHit(int target)
-{
-	attemptHitPercentage(target,80);
-}
 
 //	Player tries to hit the bull
 int hitBull(int successPercentage)
