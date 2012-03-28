@@ -12,9 +12,14 @@ int main()
 {
 	srand(time(0));
 
-	printPracticeStatistics(100);
+	int sampleSize;
 
-	printGameplayStatistics(10000);
+	cout << "Sample size: ";
+	cin >> sampleSize;
+
+	printPracticeStatistics(sampleSize);
+
+	printGameplayStatistics(sampleSize);
 
 	return 0;
 }
