@@ -4,7 +4,7 @@
 #include "dartboard.h"
 #include "player.h"
 
-enum GameType	{ JOE_PRACTICE, JOE_FIRST, SID_FIRS, SWITCH };
+enum GameType	{ JOE_PRACTICE, JOE_FIRST, SID_FIRST, SWITCH };
 
 class Game
 {
