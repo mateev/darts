@@ -1,8 +1,5 @@
 #include "dartsCore.h"
 
-const short DartsCore::score[2][21] = {{20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20},	//	This line holds the score at a given section
-													{0,1,8,10,3,19,5,12,14,17,6,15,18,4,16,7,13,9,2,11,-1}};					//	This line hold at which section is the given score
-
 //	This returns the points in a neighbour of a target; the paramater is the target
 int DartsCore::returnScoreOfNeighbour(int target)
 {
@@ -22,14 +19,6 @@ int DartsCore::attemptHit(int target,int successPercentage)
 	else											// Else ...
 		return returnScoreOfNeighbour(target);			// ... return one of the target's neighbours
 }
-
-/*
-//	This function attempts to hit a target and returns the result of that attempt
-int DartsCore::attemptHit(int target)
-{
-	return attemptHit(target,80);
-}
-*/
 
 //	Player tries to hit the bull
 int DartsCore::hitBull(int successPercentage)

@@ -6,10 +6,8 @@
 class Dartboard
 {
 public:
-	Dartboard();
-	~Dartboard();
-
-	int HitTarget(int,int);
+	Dartboard() {}			//	Default constructor
+	int HitTarget(int,int);	//	This handles hitting a target on the board
 };
 
 #endif

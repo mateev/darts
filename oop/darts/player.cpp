@@ -51,7 +51,7 @@ void Player::ScorePoints(int points)
 	case GameStage::WON:													// If the player has won...
 		return;																	// ... no use updating
 	case GameStage::WIN:													// If the player is aiming to win ...
-		score -= (points==DartsCore::BullValue) ? DartsCore::BullValue : 0;		//	... award points only if he has hit a bull
+		score -= (points==DartsCore::BULLVALUE) ? DartsCore::BULLVALUE : 0;		//	... award points only if he has hit a bull
 		break;
 	default:
 		score -= points;														// Award points as usual
@@ -87,7 +87,7 @@ int Player::ThrowDart()
 	{
 	case GameStage::FOCUS:							//	If player is trying to focus (or)
 	case GameStage::WIN:							//  If player is triyng to win
-		return DartsCore::BullValue;					//	... best chance is to aim for a bull
+		return DartsCore::BULLVALUE;					//	... best chance is to aim for a bull
 	case GameStage::FIX:							//	If the player is trying to fix on 50
 		return (score-50 <= 20) ? (score-50) : 20;		//	...	If the score can be brought down to 50 in 1 shot, will attempt to take it, otherwise will do the closest possible
 	default:
@@ -113,4 +113,10 @@ const string Player::GetName() const
 void Player::setBullHitPercent() 
 { 
 	bullHitPercent = (id == PlayerID::JOE) ? 70 : 72;	//	For Joe it's 70, otherwise it must be Sid, so 72
+}
+
+//	getter for the id
+const PlayerID Player::GetID() const
+{
+	return id;
 }

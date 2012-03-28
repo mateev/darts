@@ -6,8 +6,7 @@
 
 using std::string;
 
-enum PlayerID { JOE, SID } ;
-
+enum PlayerID { JOE, SID } ;								//	Possible player ids are Joe and Sid
 
 class Player
 {
@@ -33,6 +32,7 @@ public:
 
 	void ScorePoints(int);									//	this handles awarding points
 
+	const PlayerID GetID() const;							//	getter for the id
 	const string GetName() const;							//	getter for name, based on id
 	const int GetBullHitPercent() const;					//	getter for how well does the player hit a bull
 	const int GetDartsUsed() const { return dartsUsed; }	//	getter for how many darts have been used so far
