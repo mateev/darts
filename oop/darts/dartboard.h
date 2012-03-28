@@ -5,7 +5,6 @@
 
 class Dartboard
 {
-private:
 public:
 	Dartboard();
 	~Dartboard();

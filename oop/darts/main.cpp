@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 #include "dartboard.h"
 #include "player.h"
 
@@ -6,12 +7,18 @@ using namespace std;
 
 int main()
 {
-	Player joe(PlayerID::JOE);
+	srand(time(0));
 	Dartboard board;
 
-	cout << joe.GetName();
-	
-	cout << board.HitTarget(joe.throwDart(),joe.BullHitPercentage());
+	Player first(PlayerID::JOE);
+	Player second(PlayerID::SID);
+
+	cout << first.GetName() << endl << second.GetName() << endl;
+
+	swap(first,second);
+
+	cout << first.GetName() << endl << second.GetName() << endl;
+
 
 	return 0;
 }

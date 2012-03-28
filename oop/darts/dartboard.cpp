@@ -8,11 +8,4 @@ int Dartboard::HitTarget(int target, int bullSuccessRate)
 	return DartsCore::attemptHit(target);
 }
 
-Dartboard::~Dartboard()
-{
-}
-
-Dartboard::Dartboard()
-{
-
-}
+Dartboard::Dartboard() {}

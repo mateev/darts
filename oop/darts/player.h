@@ -3,40 +3,41 @@
 
 #include "dartsCore.h"
 #include <string>
-#include <tuple>
 
 using std::string;
-using std::tuple;
-using std::tie;
 
 enum PlayerID { JOE, SID } ;
-
-typedef tuple<int,int> Target;
 
 
 class Player
 {
 private:
-	PlayerID id;
-	enum GameStage { FOCUS, FIX, WIN, WON } currentStage;
+	enum GameStage { FOCUS, FIX, WIN, WON } currentState;	
 
-	int score;
-	int dartsUsed;
+	PlayerID id;											//	player id - can be either Joe or Sid
 
-	void setCurrentStage();
+	int score;												//	this variable holds the score
+	int dartsUsed;											//	this variable is used to remember how many darts have been used up to a point
+
+	int bullHitPercent;										//	this variable is used to store what's the chance of hitting a bull
+
+	void setCurrentState();									//	this is used to set the current state
+	void setBullHitPercent();								//	this is used to determine the chance of hitting a bull
 public:
-	Player(PlayerID=PlayerID::JOE);		//	default constructor
-	Player(const Player&);				//	copy constructor
+	Player(PlayerID=PlayerID::JOE);							//	default constructor; default player is Joe
+	Player(const Player&);									//	copy constructor
 
-	Player& operator=(const Player&);	//	operator= for the swap
+	Player& operator=(const Player&);						//	Operator= - used for the swap
 
-	int throwDart();
+	int ThrowDart();										//	this determines how many points to aim for and returns that value
 
-	void ScorePoint(int);
+	void ScorePoints(int);									//	this handles awarding points
 
-	string GetName() const;				
-	const int BullHitPercentage() const;
-	bool HasWon()const { return currentStage == GameStage::WON; }
+	const string GetName() const;							//	getter for name, based on id
+	const int GetBullHitPercent() const;					//	getter for how well does the player hit a bull
+	const int GetDartsUsed() const { return dartsUsed; }	//	getter for how many darts have been used so far
+
+	bool HasWon()const { return currentState == GameStage::WON; }//	answers if the player has won
 };
 
 
