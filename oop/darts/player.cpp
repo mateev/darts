@@ -37,6 +37,7 @@ const int Player::BullHitPercentage() const
 void Player::ScorePoint(int points)
 {
 	score-=points;
+	setCurrentStage();
 }
 
 void Player::setCurrentStage()
@@ -60,15 +61,30 @@ int Player::throwDart()
 {
 	dartsUsed++;
 
+	int returnValue = -1;
+	
 	switch(currentStage)
 	{
 	case GameStage::FOCUS:
 	case GameStage::WIN:
 		return DartsCore::BullValue;
 	case GameStage::FIX:
-		return (score-50 <= 20) ? (score-50) : 20;
+		return (score-50 <= 20) ? (score-50) : 20,BullHitPercentage();
 	case GameStage::WON:
 	default:
 		return -1;
+	}
+}
+
+string Player::GetName() const
+{
+	switch(id)
+	{
+	case JOE:
+		return "Joe";
+	case SID:
+		return "Sid";
+	default:
+		return "Unknown";
 	}
 }

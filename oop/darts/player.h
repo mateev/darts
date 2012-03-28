@@ -3,13 +3,21 @@
 
 #include "dartsCore.h"
 #include <string>
+#include <tuple>
 
 using std::string;
+using std::tuple;
+using std::tie;
+
+enum PlayerID { JOE, SID } ;
+
+typedef tuple<int,int> Target;
+
 
 class Player
 {
 private:
-	enum PlayerID { JOE, SID } id;
+	PlayerID id;
 	enum GameStage { FOCUS, FIX, WIN, WON } currentStage;
 
 	int score;
